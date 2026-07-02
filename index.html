@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Tipping Points & Probability Model (2026 - 2036)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for risk graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+        }
+        .glow-red {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.15);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 px-4 py-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="flex h-3 w-3 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                    </span>
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        Climate Cascade Model <span class="text-xs bg-red-950 text-red-400 px-2 py-0.5 rounded-full border border-red-800/50">Horizon 2036</span>
+                    </h1>
+                </div>
+                <p class="text-xs text-slate-400 mt-1">Interactive probability model of feedback loops & tipping points within a 10-year horizon</p>
+            </div>
+            <div class="text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300">
+                Informed by IPCC AR6 & Lenton et al. (Tipping Elements)
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 space-y-6">
+        
+        <!-- Physical Mechanism Context -->
+        <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row gap-6 items-center">
+            <div class="flex-1 space-y-3">
+                <span class="text-xs font-semibold text-rose-500 uppercase tracking-wider">Physical Mechanism: Accelerating Feedbacks</span>
+                <h2 class="text-2xl font-bold text-white tracking-tight">Thermal Ocean Coupling & Ice Sheet Instability</h2>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    When marine heatwaves push sea surface temperatures to unprecedented highs, they trigger a profound domino effect. Warm ocean waters erode the buttressing ice shelves of **Greenland** and **West Antarctica** from below. Removing these marine "brakes" causes land-based glaciers to slide into the ocean at an exponential rate. This massive influx of freshwater disrupts thermohaline circulation (AMOC) and decreases global albedo, locking the ocean into a compounding warming cycle.
+                </p>
+            </div>
+            <div class="w-full md:w-80 bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 self-stretch flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">System Status (Current vs 2036)</h3>
+                    <div class="space-y-2">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400">Current Warming (2026)</span>
+                                <span class="text-orange-400 font-semibold">+1.3°C</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-amber-400 h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-400">Projected Warming (2036)</span>
+                                <span class="text-red-500 font-semibold">+1.6°C to +1.9°C</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-orange-500 to-red-600 h-full rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 italic">
+                    "Once a cascade initiates, natural feedback mechanisms drive warming independently of human mitigation efforts."
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls & Simulation Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Column: Controls (4/12) -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 glow-orange space-y-5">
+                    <div class="flex items-center gap-2 pb-3 border-b border-slate-800">
+                        <span class="p-1.5 bg-orange-950 text-orange-400 rounded-lg">
+                            <i data-lucide="sliders" class="w-5 h-5"></i>
+                        </span>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Simulation Parameters</h3>
+                            <p class="text-[11px] text-slate-400">Adjust non-linear system metrics</p>
+                        </div>
+                    </div>
+
+                    <!-- Slider 1: Warming -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-slate-300">Emission Trajectory & Warming (2036)</span>
+                            <span id="temp-val" class="font-bold text-orange-400">+1.7 °C</span>
+                        </div>
+                        <input id="temp-slider" type="range" min="1.3" max="2.2" step="0.1" value="1.7" 
+                               class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-orange-500">
+                        <div class="flex justify-between text-[10px] text-slate-500">
+                            <span>Paris Target (+1.5°C)</span>
+                            <span>High Emissions (+2.2°C)</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider 2: Feedback -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-slate-300">Feedback Loop Coupling</span>
+                            <span id="feedback-val" class="font-bold text-rose-400">Strong (x1.5)</span>
+                        </div>
+                        <input id="feedback-slider" type="range" min="1.0" max="2.0" step="0.1" value="1.5" 
+                               class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500">
+                        <div class="flex justify-between text-[10px] text-slate-500">
+                            <span>Linear (No Cascade)</span>
+                            <span>Extreme Synergy (x2.0)</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider 3: Ice Instability -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="font-medium text-slate-300">Ice Sheet Instability Index</span>
+                            <span id="melt-val" class="font-bold text-blue-400">Critical (+40%)</span>
+                        </div>
+                        <input id="melt-slider" type="range" min="0" max="100" step="10" value="40" 
+                               class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                        <div class="flex justify-between text-[10px] text-slate-500">
+                            <span>Stable Dynamics</span>
+                            <span>High Accelerated Discharge</span>
+                        </div>
+                    </div>
+
+                    <!-- Presets -->
+                    <div class="pt-2">
+                        <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-2">Select Scenario Preset</span>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setPreset(1.4, 1.1, 10)" class="text-[10px] py-1.5 bg-slate-800 hover:bg-slate-700 rounded border border-slate-700 text-slate-300 font-medium transition">
+                                Conservative
+                            </button>
+                            <button onclick="setPreset(1.7, 1.5, 40)" class="text-[10px] py-1.5 bg-orange-950/40 hover:bg-orange-950/60 rounded border border-orange-800 text-orange-300 font-medium transition">
+                                Current Path
+                            </button>
+                            <button onclick="setPreset(2.1, 1.9, 80)" class="text-[10px] py-1.5 bg-red-950/40 hover:bg-red-950/60 rounded border border-red-800 text-red-300 font-medium transition">
+                                Max Cascade
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mathematical Methodology Info -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 space-y-3">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="calculator" class="w-4 h-4 text-emerald-400"></i> Stochastic Risk Profile
+                    </h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        The probability $P(\text{Tipping Point})$ after 10 years is modeled using a non-linear Weibull distribution, where risk escalates as global anomalies approach the system threshold.
+                    </p>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 font-mono text-[10px] text-slate-300 space-y-1">
+                        <div>$P(T) = 1 - e^{-\left(\frac{\Delta Temp}{Threshold}\right)^\beta \cdot (1 + \text{Cascade})}$</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Dashboard & Graphs (8/12) -->
+            <div class="lg:col-span-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- WAIS -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-blue-400 bg-blue-950/60 border border-blue-900/60 px-2 py-0.5 rounded">Cryosphere</span>
+                                <span id="wais-prob" class="text-lg font-black text-rose-500">0%</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">West Antarctic Ice Sheet Collapse</h4>
+                            <p class="text-xs text-slate-400">Sub-surface oceanic warming destabilizes ice shelves, triggering marine ice sheet instability.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800/50 space-y-1">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>Estimated Threshold:</span>
+                                <span class="font-semibold text-slate-300">~1.5°C Warming</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+                                <div id="wais-bar" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GIS -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-teal-400 bg-teal-950/60 border border-teal-900/60 px-2 py-0.5 rounded">Cryosphere</span>
+                                <span id="gis-prob" class="text-lg font-black text-rose-500">0%</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">Greenland Ice Sheet Accelerated Melt</h4>
+                            <p class="text-xs text-slate-400">Ice-elevation feedback lowers the ice sheet surface into warmer atmospheric layers, compounding surface melt.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800/50 space-y-1">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>Estimated Threshold:</span>
+                                <span class="font-semibold text-slate-300">~1.6°C Warming</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+                                <div id="gis-bar" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AMOC -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-indigo-400 bg-indigo-950/60 border border-indigo-900/60 px-2 py-0.5 rounded">Ocean Circulation</span>
+                                <span id="amoc-prob" class="text-lg font-black text-amber-500">0%</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">Atlantic Meridional Overturning (AMOC) Collapse</h4>
+                            <p class="text-xs text-slate-400">Freshwater injection from melting ice caps dilutes North Atlantic salinity, arresting the thermohaline engine.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800/50 space-y-1">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>Estimated Threshold:</span>
+                                <span class="font-semibold text-slate-300">~1.8°C Warming</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+                                <div id="amoc-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Permafrost -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-700 transition">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-amber-400 bg-amber-950/60 border border-amber-900/60 px-2 py-0.5 rounded">Carbon Cycle</span>
+                                <span id="perma-prob" class="text-lg font-black text-amber-500">0%</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">Abrupt Permafrost Thaw</h4>
+                            <p class="text-xs text-slate-400">Subsurface soils thaw, accelerating microbial decomposition and releasing massive methane and CO₂ pulses.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800/50 space-y-1">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>Estimated Threshold:</span>
+                                <span class="font-semibold text-slate-300">~1.9°C Warming</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+                                <div id="perma-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Timeline -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 glow-red space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Risk Evolution Projection (2026 - 2036)</h3>
+                            <p class="text-[11px] text-slate-400">Cumulative probability of triggering at least one tipping element</p>
+                        </div>
+                        <div class="px-2.5 py-1 bg-red-950 text-red-400 border border-red-900 rounded text-xs font-bold">
+                            Total Cascade Risk 2036: <span id="total-risk">0%</span>
+                        </div>
+                    </div>
+                    <div class="h-64 sm:h-80 w-full relative">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950/80 px-4 py-6 text-center text-xs text-slate-500 mt-8">
+        <p>© 2026 Climate Cascade Simulation Engine. Built for non-linear stochastic risk visualization.</p>
+    </footer>
+
+    <script>
+        const tempSlider = document.getElementById('temp-slider');
+        const feedbackSlider = document.getElementById('feedback-slider');
+        const meltSlider = document.getElementById('melt-slider');
+        const tempVal = document.getElementById('temp-val');
+        const feedbackVal = document.getElementById('feedback-val');
+        const meltVal = document.getElementById('melt-val');
+
+        const waisProbEl = document.getElementById('wais-prob');
+        const gisProbEl = document.getElementById('gis-prob');
+        const amocProbEl = document.getElementById('amoc-prob');
+        const permaProbEl = document.getElementById('perma-prob');
+
+        const waisBar = document.getElementById('wais-bar');
+        const gisBar = document.getElementById('gis-bar');
+        const amocBar = document.getElementById('amoc-bar');
+        const permaBar = document.getElementById('perma-bar');
+        const totalRiskEl = document.getElementById('total-risk');
+
+        let riskChart;
+        const years = Array.from({length: 11}, (_, i) => 2026 + i);
+
+        const tippingPoints = {
+            wais: { threshold: 1.5, sensitivity: 1.2 },
+            gis: { threshold: 1.6, sensitivity: 1.1 },
+            amoc: { threshold: 1.8, sensitivity: 0.9 },
+            perma: { threshold: 1.9, sensitivity: 0.85 }
+        };
+
+        function calculateProbability(temp, threshold, sensitivity, feedback, meltFactor, yearsPassed) {
+            if (temp <= 1.0) return 0;
+            const deltaTemp = temp - 1.0;
+            const normThreshold = threshold - 1.0;
+            const feedbackMultiplier = parseFloat(feedback);
+            const meltModifier = 1 + (meltFactor / 100) * 0.4;
+            const timeFactor = yearsPassed / 10; 
+            
+            let baseProb = Math.pow(deltaTemp / normThreshold, 3) * sensitivity * feedbackMultiplier * meltModifier * timeFactor;
+            let finalProb = 1 - Math.exp(-baseProb);
+            return Math.min(Math.max(finalProb, 0), 0.99);
+        }
+
+        function updateSimulation() {
+            const temp = parseFloat(tempSlider.value);
+            const feedback = parseFloat(feedbackSlider.value);
+            const melt = parseFloat(meltSlider.value);
+
+            tempVal.innerText = `+${temp.toFixed(1)} °C`;
+            feedbackVal.innerText = feedback > 1.7 ? `Critical (x${feedback.toFixed(1)})` : feedback > 1.3 ? `Strong (x${feedback.toFixed(1)})` : `Moderate (x${feedback.toFixed(1)})`;
+            meltVal.innerText = melt === 0 ? 'Stable' : `Critical (+${melt}%)`;
+
+            const pWais = calculateProbability(temp, tippingPoints.wais.threshold, tippingPoints.wais.sensitivity, feedback, melt, 10);
+            const pGis = calculateProbability(temp, tippingPoints.gis.threshold, tippingPoints.gis.sensitivity, feedback, melt, 10);
+            const pAmoc = calculateProbability(temp, tippingPoints.amoc.threshold, tippingPoints.amoc.sensitivity, feedback, 0, 10);
+            const pPerma = calculateProbability(temp, tippingPoints.perma.threshold, tippingPoints.perma.sensitivity, feedback, 0, 10);
+
+            waisProbEl.innerText = `${Math.round(pWais * 100)}%`;
+            gisProbEl.innerText = `${Math.round(pGis * 100)}%`;
+            amocProbEl.innerText = `${Math.round(pAmoc * 100)}%`;
+            permaProbEl.innerText = `${Math.round(pPerma * 100)}%`;
+
+            waisBar.style.width = `${pWais * 100}%`;
+            gisBar.style.width = `${pGis * 100}%`;
+            amocBar.style.width = `${pAmoc * 100}%`;
+            permaBar.style.width = `${pPerma * 100}%`;
+
+            const pAtLeastOne = 1 - ((1 - pWais) * (1 - pGis) * (1 - pAmoc) * (1 - pPerma));
+            totalRiskEl.innerText = `${Math.round(pAtLeastOne * 100)}%`;
+
+            const chartData = { wais: [], gis: [], amoc: [], perma: [], cumulative: [] };
+
+            for (let i = 0; i <= 10; i++) {
+                const currentYearTemp = 1.3 + ((temp - 1.3) * (i / 10));
+                const w = calculateProbability(currentYearTemp, tippingPoints.wais.threshold, tippingPoints.wais.sensitivity, feedback, melt, i);
+                const g = calculateProbability(currentYearTemp, tippingPoints.gis.threshold, tippingPoints.gis.sensitivity, feedback, melt, i);
+                const a = calculateProbability(currentYearTemp, tippingPoints.amoc.threshold, tippingPoints.amoc.sensitivity, feedback, 0, i);
+                const p = calculateProbability(currentYearTemp, tippingPoints.perma.threshold, tippingPoints.perma.sensitivity, feedback, 0, i);
+                const cum = 1 - ((1 - w) * (1 - g) * (1 - a) * (1 - p));
+
+                chartData.wais.push(w * 100);
+                chartData.gis.push(g * 100);
+                chartData.amoc.push(a * 100);
+                chartData.perma.push(p * 100);
+                chartData.cumulative.push(cum * 100);
+            }
+
+            riskChart.data.datasets[0].data = chartData.cumulative;
+            riskChart.data.datasets[1].data = chartData.wais;
+            riskChart.data.datasets[2].data = chartData.gis;
+            riskChart.data.datasets[3].data = chartData.amoc;
+            riskChart.data.datasets[4].data = chartData.perma;
+            riskChart.update();
+        }
+
+        window.setPreset = function(temp, feedback, melt) {
+            tempSlider.value = temp;
+            feedbackSlider.value = feedback;
+            meltSlider.value = melt;
+            updateSimulation();
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('riskChart').getContext('2d');
+            riskChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        { label: 'Cumulative Cascade Risk (At least one)', data: [], borderColor: '#ef4444', borderWidth: 3, backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 },
+                        { label: 'West Antarctica (Cryosphere)', data: [], borderColor: '#3b82f6', borderWidth: 1.5, borderDash: [4, 4], fill: false, tension: 0.2 },
+                        { label: 'Greenland (Cryosphere)', data: [], borderColor: '#14b8a6', borderWidth: 1.5, borderDash: [4, 4], fill: false, tension: 0.2 },
+                        { label: 'AMOC (Ocean Circulation)', data: [], borderColor: '#6366f1', borderWidth: 1.5, borderDash: [4, 4], fill: false, tension: 0.2 },
+                        { label: 'Permafrost (Carbon Pulse)', data: [], borderColor: '#f59e0b', borderWidth: 1.5, borderDash: [4, 4], fill: false, tension: 0.2 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 12 } } },
+                    scales: {
+                        x: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+                        y: { min: 0, max: 100, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', callback: v => v + "%" } }
+                    }
+                }
+            });
+        }
+
+        window.onload = function() {
+            lucide.createIcons();
+            initChart();
+            tempSlider.addEventListener('input', updateSimulation);
+            feedbackSlider.addEventListener('input', updateSimulation);
+            meltSlider.addEventListener('input', updateSimulation);
+            setPreset(1.7, 1.5, 40);
+        };
+    </script>
+</body>
+</html>
