@@ -1,0 +1,57 @@
+====================================================================
+​COMBINED TEMPLATE (HTML, JAVASCRIPT & PYTHON DATA SCIENCE)
+​Perfect for interactive web simulations and underlying analyses.
+​====================================================================
+​--- Operating System Files ---
+​.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+*.bak
+​--- Code Editors & IDEs ---
+​.vscode/
+.idea/
+*.suo
+.ntvs
+*.njsproj
+*.sln
+*.swp
+*.workspace
+.project
+.settings/
+​--- Node.js & Web Development ---
+​(In case you use Tailwind CLI, Webpack, or Vite in the future)
+​node_modules/
+/dist/
+/build/
+.npm
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+​--- Python & Data Science ---
+​(In case you crunch the CCAE equations using Python or Jupyter)
+​pycache/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+​--- Local Environment & Logs ---
+​*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
